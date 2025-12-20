@@ -17,26 +17,37 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async (message) => {
-    // Ignore other bots and the bot itself
     if (message.author.bot) return;
 
     const targetWord = "unbeatable";
     const content = message.content;
 
-    // Check if the word is in the message (case-insensitive)
-    if (content.toLowerCase().includes(targetWord)) {
-        
-        // Find all instances of the word
-        const regex = new RegExp(targetWord, 'gi');
-        const matches = content.match(regex);
+    // 'gi' means: g = global (find ALL), i = case-insensitive
+    const regex = new RegExp(targetWord, 'gi');
+    const matches = content.match(regex);
 
-        for (const word of matches) {
-            const isAllCaps = (word === targetWord.toUpperCase());
-            const isNoCaps = (word === targetWord.toLowerCase());
+    // If the word "unbeatable" exists anywhere in the message
+    if (matches) {
+        let hasError = false;
+        let offendingWord = "";
 
-            // If it's mixed-case (like "Unbeatable" or "uNbeatable")
+        for (const foundWord of matches) {
+            const isAllCaps = (foundWord === "UNBEATABLE");
+            const isNoCaps = (foundWord === "unbeatable");
+
             if (!isAllCaps && !isNoCaps) {
-                return message.reply(`TN note: it should really only be all caps or no caps`);
+                hasError = true;
+                offendingWord = foundWord; 
+                break; // Stop looking once we find one mistake
+            }
+        }
+
+        if (hasError) {
+            try {
+                await message.reply(`TN note: it should really only be all caps or no caps`);
+
+            } catch (error) {
+                console.error("Couldn't reply or delete message:", error);
             }
         }
     }
