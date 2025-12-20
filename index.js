@@ -24,21 +24,19 @@ client.once('clientReady', () => {
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
 
-    const targetWord = "unbeatable";
+    const pattern = /\bUN.*?ABLE\b/gi;
     const content = message.content;
+    const matches = content.match(pattern);
 
-    // 'gi' means: g = global (find ALL), i = case-insensitive
-    const regex = new RegExp(targetWord, 'gi');
-    const matches = content.match(regex);
-
+    
     // If the word "unbeatable" exists anywhere in the message
     if (matches) {
         let hasError = false;
         let offendingWord = "";
 
         for (const foundWord of matches) {
-            const isAllCaps = (foundWord === "UNBEATABLE");
-            const isNoCaps = (foundWord === "unbeatable");
+            const isAllCaps = (foundWord === foundWord.toUpperCase());
+            const isNoCaps = (foundWord === foundWord.toUpperCase());
 
             if (!isAllCaps && !isNoCaps) {
                 hasError = true;
@@ -46,6 +44,9 @@ client.on('messageCreate', async (message) => {
                 break; // Stop looking once we find one mistake
             }
         }
+        
+            console.log(`Received message: "${message.content}"`);
+
 
         if (hasError) {
             try {
