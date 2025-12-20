@@ -12,8 +12,13 @@ const client = new Client({
 dotenv.config();
 const TOKEN = process.env.TOKEN;
 
-client.once('ready', () => {
+client.once('clientReady', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setPresence({
+        activities: [{name: 'UNBEATABLE'}],
+        status: 'dnd',
+        type: 'PLAYING',
+    })
 });
 
 client.on('messageCreate', async (message) => {
