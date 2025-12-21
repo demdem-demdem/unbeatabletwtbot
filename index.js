@@ -1,5 +1,9 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+JavaScript
+
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const dotenv = require('dotenv');
+
+dotenv.config();
 
 const client = new Client({
     intents: [
@@ -9,57 +13,60 @@ const client = new Client({
     ]
 });
 
-dotenv.config();
-const TOKEN = process.env.TOKEN;
-
 let isGlobalCooldown = false;
 
 client.once('clientReady', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setPresence({
-        activities: [{ name: 'UNBEATABLE' }],
+        activities: [{ name: 'UNBEATABLE', type: ActivityType.Playing }],
         status: 'dnd',
-        type: 'PLAYING',
-    })
+    });
 });
 
 client.on('messageCreate', async (message) => {
-    if (message.author.bot) return;
+    if (message.author.bot || isGlobalCooldown) return;
 
-    if (isGlobalCooldown) return;
-
-    // Pattern search for any words that starts with UN and finished with ABLE
-    const pattern = /\bUN[a-zA-Z]*ABLE\b/gi;
     const content = message.content;
+
+    // COMBINED PATTERNS: We use | (OR) to check both rules at once
+    // Group 1 (UN...ABLE) or Group 2 (BATA/BADA)
+    const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)/gi;
     const matches = content.match(pattern);
 
-    // If a word contains prefix un and suffix able, then it sends the message
-    if (matches) {
-        for (const foundWord of matches) {
-            // Handle unable (that is a real word)
-            if (foundWord.toLowerCase() === 'unable') continue;
+    if (!matches) return;
 
-            let isAllCaps = (foundWord === foundWord.toUpperCase());
-            let isNoCaps = (foundWord === foundWord.toLowerCase());
+    for (const word of matches) {
+        // Handle "unable" exception
+        if (word.toLowerCase() === 'unable') continue;
+
+        // Check if it's a "Bata/Bada" word or an "UN...ABLE" word
+        const isSwingWord = /(ba[td]a)+/i.test(word);
+
+        if (isSwingWord) {
+            await triggerResponse(message, "# SWING");
+            return;
+        } else {
+            // It's an UN...ABLE word: check for mixed casing
+            const isAllCaps = (word === word.toUpperCase());
+            const isNoCaps = (word === word.toLowerCase());
 
             if (!isAllCaps && !isNoCaps) {
-                // Error handling
-                try {
-                    await message.reply(`TN note: it should really only be all caps or no caps`)
-                    
-                    isGlobalCooldown = true;
-                    
-                    setTimeout(() => {
-                        isGlobalCooldown = false;
-                    }, 10000);
-
-                    return;
-                } catch (error) {
-                    console.error("Couldn't reply or delete message:", error);
-                }
+                await triggerResponse(message, "TN note: it should really only be all caps or no caps");
+                return;
             }
         }
     }
 });
 
-client.login(TOKEN);
+// Helper function to handle replies and cooldowns to avoid repeating code
+async function triggerResponse(message, text) {
+    try {
+        await message.reply(text);
+        isGlobalCooldown = true;
+        setTimeout(() => { isGlobalCooldown = false; }, 10000);
+    } catch (error) {
+        console.error("Error sending reply:", error);
+    }
+}
+
+client.login(process.env.TOKEN);
