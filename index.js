@@ -26,6 +26,13 @@ client.on('messageCreate', async (message) => {
 
     const content = message.content;
 
+    // THE MORNING RULE
+const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
+    if (morningPattern.test(content)){
+        await triggerResponse(message, "It's afternoon");
+        return
+    }
+    
     // COMBINED PATTERNS: We use | (OR) to check both rules at once
     // Group 1 (UN...ABLE) or Group 2 (BATA/BADA)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)/gi;
