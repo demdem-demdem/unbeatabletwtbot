@@ -1,5 +1,3 @@
-JavaScript
-
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const dotenv = require('dotenv');
 
