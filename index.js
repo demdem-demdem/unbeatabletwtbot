@@ -11,7 +11,8 @@ const client = new Client({
     ]
 });
 
-let isGlobalCooldown = false;
+let isNormalCooldown = false;
+let isMediaCooldown = false;
 
 client.once('clientReady', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -22,35 +23,22 @@ client.once('clientReady', () => {
 });
 
 client.on('messageCreate', async (message) => {
-    if (message.author.bot || isGlobalCooldown) return;
+    if (message.author.bot || isNormalCooldown || isMediaCooldown) return;
 
     const content = message.content;
     const toLowerContent = content.toLowerCase();
 
     // THE MORNING RULE
-const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
-    if (morningPattern.test(content)){
+    const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
+    if (morningPattern.test(content)) {
         await triggerResponse(message, "It's afternoon");
         return
     }
 
     if (toLowerContent.includes('mommy')) {
-
-        try {
-        await message.reply({
-            content: "Mommy, is such a fun word, isn't it ?",
-            files: ['./assets/mommy.ogg']
-        });
-        
-        isGlobalCooldown = true;
-        setTimeout(() => { isGlobalCooldown = false; }, 10000);
-
-        return;
-        } catch (error) {
-            console.error("Error sending reply:", error);
-        }
+        await mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg'])
     }
-    
+
     // COMBINED PATTERNS: We use | (OR) to check both rules at once
     // Group 1 (UN...ABLE) or Group 2 (BATA/BADA)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)/gi;
@@ -85,10 +73,26 @@ const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i
 async function triggerResponse(message, text) {
     try {
         await message.reply(text);
-        isGlobalCooldown = true;
-        setTimeout(() => { isGlobalCooldown = false; }, 10000);
+
+        isNormalCooldown = true;
+        setTimeout(() => { isNormalCooldown = false; }, 10000);
     } catch (error) {
         console.error("Error sending reply:", error);
+    }
+}
+
+async function mediaResponse(message, text, media) {
+    try {
+        await message.reply({
+            content: text,
+            files: media,
+        });
+
+        isMediaCooldown = true;
+        setTimeout(() => { isMediaCooldown = false }, 60000);
+
+    } catch (error) {
+        console.error("Error sending reply media:", error);
     }
 }
 
