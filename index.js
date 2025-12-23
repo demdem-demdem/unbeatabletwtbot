@@ -25,12 +25,30 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot || isGlobalCooldown) return;
 
     const content = message.content;
+    const toLowerContent = content.toLowerCase();
 
     // THE MORNING RULE
 const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
     if (morningPattern.test(content)){
         await triggerResponse(message, "It's afternoon");
         return
+    }
+
+    if (toLowerContent.includes('mommy')) {
+
+        try {
+        await message.reply({
+            content: "Mommy, is such a fun word, isn't it ?",
+            files: ['./assets/mommy.ogg']
+        });
+        
+        isGlobalCooldown = true;
+        setTimeout(() => { isGlobalCooldown = false; }, 10000);
+
+        return;
+        } catch (error) {
+            console.error("Error sending reply:", error);
+        }
     }
     
     // COMBINED PATTERNS: We use | (OR) to check both rules at once
