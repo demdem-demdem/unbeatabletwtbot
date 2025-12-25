@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ActivityType, EmbedBuilder } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, ActivityType, EmbedBuilder } = require('discord.js');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -9,7 +9,12 @@ const client = new Client({
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMessageReactions
-    ]
+    ],
+    partials: [
+        Partials.Message,
+        Partials.Reaction,
+        Partials.User
+    ],
 });
 
 let isNormalCooldown = false;
@@ -78,7 +83,12 @@ const SHAME_EMOJI = '🍅';
 
 client.on('messageReactionAdd', async (reaction, user) => {
 
-    if ((reaction.emoji.name !== SHAME_EMOJI) || reaction.message.author.bot) return;
+    if (reaction.partial) {
+        try { await reaction.fetch(); } catch (err) { return; }
+    }
+
+    if (reaction.emoji.name !== SHAME_EMOJI) return;
+    if (reaction.message.author.bot) return;
 
 // Set to max reaction limit to not spam the shameboard
     if (reaction.count === REACTION_LIMIT) {
