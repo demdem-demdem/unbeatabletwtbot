@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
+const { Client, GatewayIntentBits, ActivityType, EmbedBuilder } = require('discord.js');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -7,7 +7,8 @@ const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMessageReactions
     ]
 });
 
@@ -68,6 +69,50 @@ client.on('messageCreate', async (message) => {
         }
     }
 });
+
+// Shame/Tomato Board
+
+const SHAME_CHANNEL_ID = '1453820185407651982';
+const REACTION_LIMIT = 10;
+const SHAME_EMOJI = '🍅';
+
+client.on('messageReactionAdd', async (reaction, user) => {
+
+    if ((reaction.emoji.name !== SHAME_EMOJI) || reaction.message.author.bot) return;
+
+// Set to max reaction limit to not spam the shameboard
+    if (reaction.count === REACTION_LIMIT) {
+        const shameChannel = client.channels.cache.get(SHAME_CHANNEL_ID);
+        if (!shameChannel) return console.log("Shame channel not found");
+
+        const msg = reaction.message;
+
+        // Create the embed
+        const shameEmbed = new EmbedBuilder()
+            .setColor(0xFF4500)
+            .setAuthor({
+                name: msg.author.tag,
+                iconURL: msg.author.displayAvatarURL({ dynamic: true})
+            })
+            .setDescription(msg.content || " [No text content] ")
+            .addFields(
+                {name: 'Channel', value: `${msg.channel}`, inline:true}
+            )
+            .setTimestamp()
+            .setFooter({text: `Message ID : ${msg.id}` });
+        
+        const image = msg.attachments.first();
+        if (image) {
+            shameEmbed.setImage(image.proxyURL);
+        }
+
+        await shameChannel.send({
+            content: `🍅 | ${msg.url}`,
+            embeds: [shameEmbed]
+        });
+    }
+
+})
 
 // Helper function to handle replies and cooldowns to avoid repeating code
 async function triggerResponse(message, text) {
