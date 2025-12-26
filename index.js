@@ -57,7 +57,7 @@ client.on('messageCreate', async (message) => {
     }
 
     // 3. Regex Patterns (UN...ABLE / BATA)
-    const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)/gi;
+    const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bf+u+c+k+i+n+g+\s?t+i+r+e+d?)/gi;
     const matches = content.match(pattern);
     if (!matches) return;
 
@@ -66,6 +66,10 @@ client.on('messageCreate', async (message) => {
 
         if (/(ba[td]a)+/i.test(word)) {
             return triggerResponse(message, "# SWING");
+        }
+
+        if (/(f+u+c+k+i+n+g+\s?t+i+r+e+d?)+/i.test(word)) {
+            return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg'])
         }
 
         const isAllCaps = (word === word.toUpperCase());
