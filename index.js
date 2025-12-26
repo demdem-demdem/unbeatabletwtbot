@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Partials, ActivityType, EmbedBuilder } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, ActivityType, EmbedBuilder, chatInputApplicationCommandMention, messageLink } = require('discord.js');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -90,7 +90,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.emoji.name !== SHAME_EMOJI) return;
     if (reaction.message.author.bot) return;
 
-// Set to max reaction limit to not spam the shameboard
+    // Set to max reaction limit to not spam the shameboard
     if (reaction.count === REACTION_LIMIT) {
         const shameChannel = client.channels.cache.get(SHAME_CHANNEL_ID);
         if (!shameChannel) return console.log("Shame channel not found");
@@ -102,15 +102,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
             .setColor(0xFF4500)
             .setAuthor({
                 name: msg.author.tag,
-                iconURL: msg.author.displayAvatarURL({ dynamic: true})
+                iconURL: msg.author.displayAvatarURL({ dynamic: true })
             })
             .setDescription(msg.content || " [No text content] ")
             .addFields(
-                {name: 'Channel', value: `${msg.channel}`, inline:true}
+                { name: 'Channel', value: `${msg.channel}`, inline: true }
             )
             .setTimestamp()
-            .setFooter({text: `Message ID : ${msg.id}` });
-        
+            .setFooter({ text: `Message ID : ${msg.id}` });
+
         const image = msg.attachments.first();
         if (image) {
             shameEmbed.setImage(image.proxyURL);
@@ -122,6 +122,46 @@ client.on('messageReactionAdd', async (reaction, user) => {
         });
     }
 
+})
+
+// StarBoard for Spoiler chat
+
+const SPOILER_CHANNEL_ID = '1450980758427537551'
+const SPOILER_REACTION_LIMIT = 5;
+const SPOILER_EMOJI = '⭐';
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    if (reaction.partial) {
+        try { await reaction.fetch(); } catch (err) { return; }
+    }
+
+    if (reaction.emoji.name !== SPOILER_EMOJI) return;
+    if (reaction.message.author.bot) return;
+
+    // Set to max reaction limit to not spam the pin board
+    if (reaction.count === SPOILER_REACTION_LIMIT) {
+        const spoilerChannel = client.channels.cache.get(SPOILER_CHANNEL_ID);
+        if (!spoilerChannel) return console.log("Spoiler channel not found");
+
+        const message = reaction.message;
+
+        // Handling pin limit
+        try {
+            const pins = await reaction.message.channel.messages.fetchPins();
+
+            if (pins.size >= 50) {
+                const oldestPin = pins.last();
+
+                if (oldestPin) {
+                    await oldestPin.unpin()
+                }
+            }
+
+            await message.pin();
+        } catch (err) {
+            console.error("Error managing pins:", err)
+        }
+    }
 })
 
 // Helper function to handle replies and cooldowns to avoid repeating code
