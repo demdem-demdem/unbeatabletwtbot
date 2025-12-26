@@ -15,8 +15,16 @@ const client = new Client({
 
 // Settings for shame and spoiler chats
 const CONFIG = {
-    SHAME: { ID: '1453820185407651982', LIMIT: 10, EMOJI: '🍅' },
-    SPOILER: { ID: '1450980758427537551', LIMIT: 5, EMOJI: '💚' }
+    SHAME: {
+        ID: process.env.SHAME_CHANNEL_ID,
+        LIMIT: Number(process.env.SHAME_REACTION_LIMIT),
+        EMOJI: process.env.SHAME_EMOJI
+    },
+    SPOILER: {
+        ID: process.env.SPOILER_CHANNEL_ID,
+        LIMIT: Number(process.env.SPOILER_REACTION_LIMIT),
+        EMOJI: process.env.SPOILER_EMOJI
+    }
 };
 
 // Initialize cooldowns
