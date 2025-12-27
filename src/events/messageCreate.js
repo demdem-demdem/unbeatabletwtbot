@@ -16,6 +16,10 @@ module.exports = async (message) => {
         return mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg']);
     }
 
+    if (lowerContent.includes('jail')) {
+        return triggerResponse(message, "Prison.");
+    }
+
     // 3. Regex Patterns (UN...ABLE / BATA)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bf+u+c+k+i+n+g+\s?t+i+r+e+d?)/gi;
     const matches = content.match(pattern);
