@@ -1,4 +1,5 @@
 const { triggerResponse, mediaResponse } = require('../utils/responseHelpers.js')
+const { updateCounter } = require('../utils/counterHandler');
 
 // --- Message Logic ---
 module.exports = async (message) => {
@@ -6,7 +7,13 @@ module.exports = async (message) => {
 
     const content = message.content;
     const lowerContent = content.toLowerCase();
+    
 
+    if ((message.author.id === '378253524938784769') && lowerContent.includes('goth baddie')){
+        const newCount = updateCounter(message.author.id);
+        return triggerResponse(message, `That's the ${newCount} time you've said goth baddie.`);
+    }
+    
     // 1. Morning Rule
     const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
     if (morningPattern.test(content)) return triggerResponse(message, "It's afternoon");
