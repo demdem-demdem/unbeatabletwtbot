@@ -36,7 +36,7 @@ module.exports = async (message) => {
         if (word.toLowerCase() === 'unable') continue;
 
         if (/(ba[td]a)+/i.test(word)) {
-            return triggerResponse(message, "# SWING");
+            return mediaResponse(message, "# SWING", ['./assets/swing.ogg']);
         }
 
         if (/(f+u+c+k+i+n+g+\s?t+i+r+e+d?)+/i.test(word)) {
