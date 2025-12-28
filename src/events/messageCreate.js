@@ -9,9 +9,9 @@ module.exports = async (message) => {
     const lowerContent = content.toLowerCase();
     
 
-    if ((message.author.id === '378253524938784769') && lowerContent.includes('goth baddie')){
+    if ((message.author.id === '378253524938784769') && lowerContent.includes('goth baddie'||'gothie')){
         const newCount = updateCounter(message.author.id);
-        return triggerResponse(message, `That's the ${newCount} time you've said goth baddie.`);
+        return triggerResponse(message, `That's the ${newCount} time you've said goth baddie / gothie.`);
     }
 
     if (lowerContent.includes('quavin it')) {
