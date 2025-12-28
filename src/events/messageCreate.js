@@ -13,6 +13,10 @@ module.exports = async (message) => {
         const newCount = updateCounter(message.author.id);
         return triggerResponse(message, `That's the ${newCount} time you've said goth baddie.`);
     }
+
+    if (lowerContent.includes('quavin it')) {
+        return triggerResponse(message, '# im straight up quavin it!!!!!!!!');
+    }
     
     // 1. Morning Rule
     const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
