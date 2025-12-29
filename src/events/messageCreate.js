@@ -18,6 +18,9 @@ module.exports = async (message) => {
         return triggerResponse(message, '# im straight up quavin it!!!!!!!!');
     }
     
+    if (lowerContent.includes('peak')) {
+        return triggerResponse(message, 'divide');
+    }
     // 1. Morning Rule
     const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
     if (morningPattern.test(content)) return triggerResponse(message, "It's afternoon");
