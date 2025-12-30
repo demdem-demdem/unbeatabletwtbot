@@ -8,52 +8,59 @@ module.exports = async (message) => {
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
-
-    if ((message.author.id === '378253524938784769') && lowerContent.includes('goth baddie'||'gothie' || 'woman in goth')){
+    // 1. User-Specific Logic
+    const gothKeywords = ['goth baddie', 'gothie', 'woman in goth'];
+    if (message.author.id === '378253524938784769' && gothKeywords.some(key => lowerContent.includes(key))) {
         const newCount = updateCounter(message.author.id);
         return triggerResponse(message, `That's the ${newCount} time you've said goth baddie / gothie.`);
     }
 
-    if (lowerContent.includes('quavin it')) {
-        return triggerResponse(message, '# im straight up quavin it!!!!!!!!');
+   // 2. Simple Key-Value Triggers
+    const simpleTriggers = {
+        'quavin it': '# im straight up quavin it!!!!!!!!',
+        'peak': 'divide',
+        'jail': 'Prison.'
+    };
+
+    for (const [key, response] of Object.entries(simpleTriggers)) {
+        if (lowerContent.includes(key)) {
+            return triggerResponse(message, response);
+        }
     }
-    
-    if (lowerContent.includes('peak')) {
-        return triggerResponse(message, 'divide');
-    }
-    // 1. Morning Rule
+
+    // 3. Morning Rule
     const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
     if (morningPattern.test(content)) return triggerResponse(message, "It's afternoon");
 
-    // 2. Mommy Rule
+    // 4. Mommy Rule
     if (lowerContent.includes('mommy')) {
         return mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg']);
     }
 
-    if (lowerContent.includes('jail')) {
-        return triggerResponse(message, "Prison.");
-    }
-
-    // 3. Regex Patterns (UN...ABLE / BATA)
+    // 5. Complex Pattern Matching (UN...ABLE / BATA / TIRED)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bf+u+c+k+i+n+g+\s?t+i+r+e+d?)/gi;
     const matches = content.match(pattern);
-    if (!matches) return;
 
-    for (const word of matches) {
-        if (word.toLowerCase() === 'unable') continue;
+    if (matches) {
+        for (const word of matches) {
+            const lowerWord = word.toLowerCase();
+            
+            if (lowerWord === 'unable') continue;
 
-        if (/(ba[td]a)+/i.test(word)) {
-            return mediaResponse(message, "# SWING", ['./assets/swing.ogg']);
-        }
+            if (/(ba[td]a)+/i.test(word)) {
+                return mediaResponse(message, "# SWING", ['./assets/swing.ogg']);
+            }
 
-        if (/(f+u+c+k+i+n+g+\s?t+i+r+e+d?)+/i.test(word)) {
-            return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg'])
-        }
+            if (/f+u+c+k+i+n+g+\s?t+i+r+e+d?/i.test(word)) {
+                return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg']);
+            }
 
-        const isAllCaps = (word === word.toUpperCase());
-        const isNoCaps = (word === word.toLowerCase());
-        if (!isAllCaps && !isNoCaps) {
-            return triggerResponse(message, "TN note: it should really only be all caps or no caps");
+            // Case sensitivity check
+            const isAllCaps = (word === word.toUpperCase());
+            const isNoCaps = (word === word.toLowerCase());
+            if (!isAllCaps && !isNoCaps) {
+                return triggerResponse(message, "TN note: it should really only be all caps or no caps");
+            }
         }
     }
 };
