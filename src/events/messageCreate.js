@@ -23,7 +23,8 @@ module.exports = async (message) => {
     };
 
     for (const [key, response] of Object.entries(simpleTriggers)) {
-        if (lowerContent.includes(key)) {
+        const regex = new RegExp(`\\b${key}\\b`, 'i')
+        if (regex.text(lowerContent)) {
             return triggerResponse(message, response);
         }
     }
