@@ -5,6 +5,30 @@ const { updateCounter } = require('../utils/counterHandler');
 module.exports = async (message) => {
     if (message.author.bot) return;
 
+    if (message.content.startsWith('!say ') && 
+        message.author.id === process.env.MY_USER_ID && 
+        message.channel.id === process.env.COMMAND_CHANNEL_ID) {
+
+        // Extract the message content after "!say "
+        const sayMessage = message.content.slice(5).trim();
+        if (!sayMessage) return;
+
+        try {
+            // Fetch the channel from the other server
+            const targetChannel = await message.client.channels.fetch(process.env.TARGET_CHANNEL_ID);
+            
+            if (targetChannel) {
+                await targetChannel.send(sayMessage);
+                // Optional: React to your command to show it worked
+                await message.react('✅');
+            }
+        } catch (err) {
+            console.error("Failed to send cross-server message:", err);
+            await message.react('❌');
+        }
+        return; // Stop processing other rules for this message
+    }
+
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
