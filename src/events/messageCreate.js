@@ -29,6 +29,7 @@ module.exports = async (message) => {
         return; // Stop processing other rules for this message
     }
 
+
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
@@ -42,6 +43,9 @@ module.exports = async (message) => {
    // 2. Simple Key-Value Triggers
     const simpleTriggers = {
         'quavin it': '# im straight up quavin it!!!!!!!!',
+        'quaverin it': '# im straight up quaverin it!!!!!!!!',
+        'override beat': '# [H.A.R.M. INTERNAL SECURITY LOG - CELL A-1] \n**SUBJECT**: BEAT \n**RESTRAINT STATUS**: 100% (Acoustic Shield Active) \n**CURRENT STABILIZER FREQUENCY**: 440hz \n-# *NOTE: Any resonance matching 440hz will cause a mechanical lock reset.*',
+        "you're doing the" : "same shit",
         'peak': 'divide',
         'jail': 'Prison.'
     };
