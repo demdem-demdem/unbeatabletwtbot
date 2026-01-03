@@ -1,7 +1,7 @@
 const { triggerResponse, mediaResponse } = require('../utils/responseHelpers.js')
 const { updateCounter } = require('../utils/counterHandler');
 
-// --- Message Logic ---
+// message logic for arg
 module.exports = async (message) => {
     if (message.author.bot) return;
 
@@ -9,7 +9,7 @@ module.exports = async (message) => {
         message.author.id === process.env.MY_USER_ID && 
         message.channel.id === process.env.COMMAND_CHANNEL_ID) {
 
-        // Extract the message content after "!say "
+        // Take the content after i say !say or whatever (its litteraly jsut htat)
         const sayMessage = message.content.slice(5).trim();
         if (!sayMessage) return;
 
@@ -19,28 +19,28 @@ module.exports = async (message) => {
             
             if (targetChannel) {
                 await targetChannel.send(sayMessage);
-                // Optional: React to your command to show it worked
+                // React to my message to say it worked
                 await message.react('✅');
             }
         } catch (err) {
             console.error("Failed to send cross-server message:", err);
             await message.react('❌');
         }
-        return; // Stop processing other rules for this message
+        return; 
     }
 
 
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
-    // 1. User-Specific Logic
+    // Count for Hazel cuz she goth badding too much
     const gothKeywords = ['goth baddie', 'gothie', 'woman in goth'];
     if (message.author.id === '378253524938784769' && gothKeywords.some(key => lowerContent.includes(key))) {
         const newCount = updateCounter(message.author.id);
         return triggerResponse(message, `That's the ${newCount} time you've said goth baddie / gothie.`);
     }
 
-   // 2. Simple Key-Value Triggers
+   // triggers message for messaged and shit i guess
     const simpleTriggers = {
         'quavin it': '# im straight up quavin it!!!!!!!!',
         'quaverin it': '# im straight up quaverin it!!!!!!!!',
@@ -57,16 +57,16 @@ module.exports = async (message) => {
         }
     }
 
-    // 3. Morning Rule
-    const morningPattern = /^((g+m+)|(g+o+o+d+\s?m+o+r+n+i+n+g?)|(m+o+r+n+i+n+g?))/i;
+    // good morning, its afternoon
+    const morningPattern = /^((gm)|(good\s?morning?)|(morning?))/i;
     if (morningPattern.test(content)) return triggerResponse(message, "It's afternoon");
 
-    // 4. Mommy Rule
+    // its such a fun word
     if (lowerContent.includes('mommy')) {
         return mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg']);
     }
 
-    // 5. Complex Pattern Matching (UN...ABLE / BATA / TIRED)
+    // regex hell (UN...ABLE / BATA / TIRED)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bf+u+c+k+i+n+g+\s?t+i+r+e+d?)/gi;
     const matches = content.match(pattern);
 
@@ -80,7 +80,7 @@ module.exports = async (message) => {
                 return mediaResponse(message, "# SWING", ['./assets/swing.ogg']);
             }
 
-            if (/f+u+c+k+i+n+g+\s?t+i+r+e+d?/i.test(word)) {
+            if (/fucking\s?tired?/i.test(word)) {
                 return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg']);
             }
 

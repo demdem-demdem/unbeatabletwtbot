@@ -5,7 +5,7 @@ const messageCreate = require('./src/events/messageCreate');
 const messageReaction = require('./src/events/messageReaction');
 
 
-// Adds permissions the bot needs
+// Adds permissions the bot needs cuz its a fat fucking chud mf
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -16,7 +16,7 @@ const client = new Client({
     partials: [Partials.Message, Partials.Reaction, Partials.User],
 });
 
-// Initialize the bot
+// Initialize the bot cuz little baby want its milky
 client.once('clientReady', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setPresence({

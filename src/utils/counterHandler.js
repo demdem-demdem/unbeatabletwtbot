@@ -10,10 +10,10 @@ function getCounters() {
 function updateCounter(userId) {
     const counters = getCounters();
 
-    // Increment or start at 1
+    // add or starts at 1
     counters[userId] = (counters[userId] || 0) + 1;
 
-    // Save back to the file
+    // save to the file
     fs.writeFileSync(filePath, JSON.stringify(counters, null, 2));
 
     return counters[userId];

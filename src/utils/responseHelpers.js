@@ -1,5 +1,6 @@
 let cooldowns = { normal: false, media: false };
 
+// Send message if it doesnt have a media
 async function triggerResponse(message, text) {
     if (cooldowns.normal) return;
     try {
@@ -9,6 +10,7 @@ async function triggerResponse(message, text) {
     } catch (e) { console.error(e); }
 }
 
+// Sends the message that has a media (like mommy.ogg and shit)
 async function mediaResponse(message, text, media) {
     if (cooldowns.media) return;
     try {
