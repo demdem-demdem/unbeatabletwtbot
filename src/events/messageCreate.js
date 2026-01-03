@@ -44,7 +44,6 @@ module.exports = async (message) => {
     const simpleTriggers = {
         'quavin it': '# im straight up quavin it!!!!!!!!',
         'quaverin it': '# im straight up quaverin it!!!!!!!!',
-        'override beat': '# [H.A.R.M. INTERNAL SECURITY LOG - CELL A-1] \n**SUBJECT**: BEAT \n**RESTRAINT STATUS**: 100% (Acoustic Shield Active) \n**CURRENT STABILIZER FREQUENCY**: 440hz \n-# *NOTE: Any resonance matching 440hz will cause a mechanical lock reset.*',
         "you're doing the" : "same shit",
         'peak': 'divide',
         'jail': 'Prison.'
@@ -67,7 +66,7 @@ module.exports = async (message) => {
     }
 
     // regex hell (UN...ABLE / BATA / TIRED)
-    const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bf+u+c+k+i+n+g+\s?t+i+r+e+d?)/gi;
+    const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bfucking\s?tired?)|(\bhammers?)/gi;
     const matches = content.match(pattern);
 
     if (matches) {
@@ -82,6 +81,12 @@ module.exports = async (message) => {
 
             if (/fucking\s?tired?/i.test(word)) {
                 return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg']);
+            }
+
+            if (/hammers?/i.test(word)) {
+                var hammers = ["plastic", "drastic"];
+                var hammerChoice = Math.floor(Math.random() * hammers.length);
+                return triggerResponse(message, hammers[hammerChoice]);
             }
 
             // Case sensitivity check
