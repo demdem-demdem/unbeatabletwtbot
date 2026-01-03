@@ -73,7 +73,7 @@ module.exports = async (reaction) => {
     }
 
     // MpregChair Pinning, fuck you Wazu
-    if ((message.reactions.cache.find(r => r.emoji.name === CONFIG.MPREG.EMOJI)?.count ?? 0) >= CONFIG.MPREG.LIMIT && (message.reactions.cache.find(r => r.emoji.name === CONFIG.CHAIR.EMOJI)?.count ?? 0) >= CONFIG.CHAIR.LIMIT) {
+    if ((message.reactions.cache.find(r => r.emoji.name === CONFIG.MPREG.EMOJI)?.count ?? 0) === CONFIG.MPREG.LIMIT && (message.reactions.cache.find(r => r.emoji.name === CONFIG.CHAIR.EMOJI)?.count ?? 0) === CONFIG.CHAIR.LIMIT) {
         
             const mpregchairChannel = botClient.channels.cache.get(CONFIG.MPREG.ID);
             if (!mpregchairChannel) return;
