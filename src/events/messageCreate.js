@@ -1,10 +1,11 @@
 const { triggerResponse, mediaResponse } = require('../utils/responseHelpers.js')
 const { updateCounter } = require('../utils/counterHandler');
 
-// message logic for arg
+
 module.exports = async (message) => {
     if (message.author.bot) return;
 
+    // message logic for me to fuck up with people
     if (message.content.startsWith('!say ') && 
         message.author.id === process.env.MY_USER_ID && 
         message.channel.id === process.env.COMMAND_CHANNEL_ID) {
@@ -29,27 +30,27 @@ module.exports = async (message) => {
         return; 
     }
 
-
+    // takes the content of all messages and makes it lowercase too because we never know (we always know)
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
     // Count for Hazel cuz she goth badding too much
-    const gothKeywords = ['goth baddie', 'gothie', 'woman in goth'];
-    if (message.author.id === '378253524938784769' && gothKeywords.some(key => lowerContent.includes(key))) {
+    const gothBaddieIHateYouHazel = ['goth baddie', 'gothie', 'woman in goth'];
+    if (message.author.id === process.env.HAZEL_USER_ID && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
         const newCount = updateCounter(message.author.id);
-        return triggerResponse(message, `That's the ${newCount} time you've said goth baddie / gothie.`);
+        return triggerResponse(message, `thats the ${newCount} time you've said goth baddie / gothie.`);
     }
 
-   // triggers message for messaged and shit i guess
-    const simpleTriggers = {
-        'quavin it': '# im straight up quavin it!!!!!!!!',
-        'quaverin it': '# im straight up quaverin it!!!!!!!!',
-        "you're doing the" : "same shit",
+   // triggers message for messaged and shit i guess (can be used with regex (don't kill yourself plz))
+    const triggers = {
+        'quave?r?in it': '# im straight up quavin it!!!!!!!!',
+        "you'?re? doing? the" : "same shit",
         'peak': 'divide',
         'jail': 'Prison.'
     };
 
-    for (const [key, response] of Object.entries(simpleTriggers)) {
+    // takes the const and make it an array and also make it regex (i hate regex please never use regex)
+    for (const [key, response] of Object.entries(triggers)) {
         const regex = new RegExp(`\\b${key}\\b`, 'i');
         if (regex.test(lowerContent)) {
             return triggerResponse(message, response);
@@ -57,15 +58,15 @@ module.exports = async (message) => {
     }
 
     // good morning, its afternoon
-    const morningPattern = /^((gm)|(good\s?morning?)|(morning?))/i;
-    if (morningPattern.test(content)) return triggerResponse(message, "It's afternoon");
+    const goodMoriningSunshine = /^((gm)|(goo+d\s?morning?)|(mo+rning?))/i;
+    if (goodMoriningSunshine.test(content)) return triggerResponse(message, "It's afternoon");
 
     // its such a fun word
     if (lowerContent.includes('mommy')) {
         return mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg']);
     }
 
-    // regex hell (UN...ABLE / BATA / TIRED)
+    // regex hell (un-able | bata bada | quaver swears yaddayadda)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bfucking\s?tired?)|(\bhammers?)/gi;
     const matches = content.match(pattern);
 
@@ -73,27 +74,31 @@ module.exports = async (message) => {
         for (const word of matches) {
             const lowerWord = word.toLowerCase();
             
+            // if it unable we dont check it cauz it woudlve been triggered by the un-able regex and i hate it (help me)
             if (lowerWord === 'unable') continue;
 
+            // swing your shit twin
             if (/(ba[td]a)+/i.test(word)) {
                 return mediaResponse(message, "# SWING", ['./assets/swing.ogg']);
             }
 
+            // she was allowed to say it once (she was fucking tired)
             if (/fucking\s?tired?/i.test(word)) {
                 return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg']);
             }
 
+            //ahah look its funny because its a reference to treble and clef please laugh im so lonely
             if (/hammers?/i.test(word)) {
                 var hammers = ["plastic", "drastic"];
                 var hammerChoice = Math.floor(Math.random() * hammers.length);
                 return triggerResponse(message, hammers[hammerChoice]);
             }
 
-            // Case sensitivity check
+            // maaaw the case is a bit sensitive, so we might as well check it (big baby)
             const isAllCaps = (word === word.toUpperCase());
             const isNoCaps = (word === word.toLowerCase());
             if (!isAllCaps && !isNoCaps) {
-                return triggerResponse(message, "TN note: it should really only be all caps or no caps");
+                return triggerResponse(message, "TN note: it should really only be all caps or no caps"); // TN note: it should really only be all caps or no caps
             }
         }
     }
