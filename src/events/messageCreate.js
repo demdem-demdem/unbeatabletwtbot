@@ -36,7 +36,7 @@ module.exports = async (message) => {
     
     // Count for Hazel cuz she goth badding too much
     const gothBaddieIHateYouHazel = ['goth baddie', 'gothie', 'woman in goth'];
-    if (message.author.id === ' 378253524938784769' && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
+    if (message.author.id === '378253524938784769' && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
         const newCount = updateCounter(message.author.id);
         return triggerResponse(message, `thats the ${newCount} time you've said goth baddie / gothie.`);
     }
