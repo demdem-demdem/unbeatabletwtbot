@@ -92,13 +92,13 @@ module.exports = async (reaction) => {
     // MpregChair Pinning, fuck you Wazu
     // this fucking logic made me cry blood. cuz we're checking for two differents emoji at the same time we have to do all this shit maybe theres another way but idk so hell)
     if ((message.reactions.cache.find(r => r.emoji.name === CONFIG.MPREG.EMOJI)?.count ?? 0) === CONFIG.MPREG.LIMIT && (message.reactions.cache.find(r => r.emoji.name === CONFIG.CHAIR.EMOJI)?.count ?? 0) === CONFIG.CHAIR.LIMIT) {
-
+        console.log("wassup bbg ily")
         //pretty much the same as the tomatoboard one, just i hate wazu
 
         const mpregchairChannel = botClient.channels.cache.get(CONFIG.MPREG.ID);
         if (!mpregchairChannel) return;
-
-        const fetch = await mpregChannel.messages.fetch({ limit: 25 });
+        
+        const fetch = await mpregchairChannel.messages.fetch({ limit: 25 });
 
         const alreadyOnBoard = fetch.some(m => m.embeds[0]?.footer?.text?.endsWith(message.id));
 
