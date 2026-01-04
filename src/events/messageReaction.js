@@ -44,21 +44,28 @@ module.exports = async (reaction) => {
         const shameChannel = botClient.channels.cache.get(CONFIG.SHAME.ID);
         if (!shameChannel) return; // cuz where the fuck would you put the pinned message anyway ?
 
-        const shameEmbed = new EmbedBuilder() //i used an embed builder online : https://embed.dan.onl/ its cool and it works well plz us that cuz its cool
-            .setColor(0xFF4500)
-            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
-            .setDescription(message.content || " [No text content] ")
-            .addFields({ name: 'Channel', value: `${message.channel}`, inline: true })
-            .setTimestamp()
-            .setFooter({ text: `Message ID: ${message.id}` });
+        // so you see if the message is already on the board why the fuck would you pin it again ? Are you stupid ? What is your problem ?
+        const fetch = await shameChannel.messages.fetch({ limit: 25 });
+        const alreadyOnBoard = fetch.some(m => m.embeds[0]?.footer?.text?.endsWith(message.id));
+        // i think that's mostly depreciated code like from another version of discord js but who cares at this point thank you random redditor for that
 
-        // yeah we check if you send anything or else its pointless
-        if (message.attachments.size > 0) {
-            shameEmbed.setImage(message.attachments.first().proxyURL);
+        if (!alreadyOnBoard) {
+            const shameEmbed = new EmbedBuilder() //i used an embed builder online : https://embed.dan.onl/ its cool and it works well plz us that cuz its cool
+                .setColor(0xFF4500)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+                .setDescription(message.content || " [No text content] ")
+                .addFields({ name: 'Channel', value: `${message.channel}`, inline: true })
+                .setTimestamp()
+                .setFooter({ text: `Message ID: ${message.id}` });
+
+            // yeah we check if you send anything or else its pointless
+            if (message.attachments.size > 0) {
+                shameEmbed.setImage(message.attachments.first().proxyURL);
+            }
+
+            // then it send its shit
+            await shameChannel.send({ content: `🍅 | ${message.url}`, embeds: [shameEmbed] });
         }
-
-        // then it send its shit
-        await shameChannel.send({ content: `🍅 | ${message.url}`, embeds: [shameEmbed] });
     }
 
     // Spoiler Pinning (because the spoilers wanna be starboarded too but cant cuz server rules yadda yadda i hate it)
@@ -66,7 +73,6 @@ module.exports = async (reaction) => {
         // if the message channel isnt the spoiler one then it doesnt work at all, basic shit really
         if (message.channel.id !== CONFIG.SPOILER.ID) return;
 
-        
         try {
             // we fetch the number of pins, if its more than 50 then bye bye to the oldest pinned one, fuck discord btw
             const pins = await message.channel.messages.fetchPins();
@@ -87,12 +93,18 @@ module.exports = async (reaction) => {
     // this fucking logic made me cry blood. cuz we're checking for two differents emoji at the same time we have to do all this shit maybe theres another way but idk so hell)
     if ((message.reactions.cache.find(r => r.emoji.name === CONFIG.MPREG.EMOJI)?.count ?? 0) === CONFIG.MPREG.LIMIT && (message.reactions.cache.find(r => r.emoji.name === CONFIG.CHAIR.EMOJI)?.count ?? 0) === CONFIG.CHAIR.LIMIT) {
 
-            //pretty much the same as the tomatoboard one, just i hate wazu
+        //pretty much the same as the tomatoboard one, just i hate wazu
 
-            const mpregchairChannel = botClient.channels.cache.get(CONFIG.MPREG.ID);
-            if (!mpregchairChannel) return;
+        const mpregchairChannel = botClient.channels.cache.get(CONFIG.MPREG.ID);
+        if (!mpregchairChannel) return;
 
-            const embedMpreg = new EmbedBuilder() 
+        const fetch = await mpregChannel.messages.fetch({ limit: 25 });
+
+        const alreadyOnBoard = fetch.some(m => m.embeds[0]?.footer?.text?.endsWith(message.id));
+
+        if (!alreadyOnBoard) {
+
+            const embedMpreg = new EmbedBuilder()
                 .setColor(0xEDDC24)
                 .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
                 .setDescription(message.content || " [No text content] ")
@@ -105,6 +117,6 @@ module.exports = async (reaction) => {
             }
 
             await mpregchairChannel.send({ content: `🫃🪑 | ${message.url}`, embeds: [embedMpreg] })
-    
+        }
     }
-};
+}; 
