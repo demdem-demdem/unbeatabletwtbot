@@ -40,10 +40,10 @@ module.exports = async (message) => {
     
     // Count for Hazel cuz she goth badding too much
     const gothBaddieIHateYouHazel = ['goth baddie', 'gothie', 'woman in goth'];
-    if (message.author.id === '378253524938784769' && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
+    if (message.author.id === process.env.BADDIE_USER_ID && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
         const newCount = updateCounter(message.author.id);
         return triggerResponse(message, `thats the ${newCount} time you've said goth baddie / gothie.`);
-    }
+    };
 
    // triggers message for messaged and shit i guess (can be used with regex (don't kill yourself plz))
     const triggers = {
@@ -60,7 +60,7 @@ module.exports = async (message) => {
         if (regex.test(lowerContent)) {
             return triggerResponse(message, response);
         }
-    }
+    };
 
     // good morning, its afternoon
     const goodMoriningSunshine = /^((gm)|(goo+d\s?morning?)|(mo+rning?))/i;
@@ -69,7 +69,7 @@ module.exports = async (message) => {
     // its such a fun word
     if (lowerContent.includes('mommy')) {
         return mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg']);
-    }
+    };
 
     // regex hell (un-able | bata bada | quaver swears yaddayadda)
     const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bfucking\s?tired?)|(\bhammers?)/gi;
@@ -85,26 +85,26 @@ module.exports = async (message) => {
             // swing your shit twin
             if (/(ba[td]a)+/i.test(word)) {
                 return mediaResponse(message, "# SWING", ['./assets/swing.ogg']);
-            }
+            };
 
             // she was allowed to say it once (she was fucking tired)
             if (/fucking\s?tired?/i.test(word)) {
                 return mediaResponse(message, "I'M SO FUCKING TIRED", ['./assets/tired.ogg']);
-            }
+            };
 
             //ahah look its funny because its a reference to treble and clef please laugh im so lonely
             if (/hammers?/i.test(word)) {
                 var hammers = ["plastic", "drastic"];
                 var hammerChoice = Math.floor(Math.random() * hammers.length);
                 return triggerResponse(message, hammers[hammerChoice]);
-            }
+            };
 
             // maaaw the case is a bit sensitive, so we might as well check it (big baby)
             const isAllCaps = (word === word.toUpperCase());
             const isNoCaps = (word === word.toLowerCase());
             if (!isAllCaps && !isNoCaps) {
                 return triggerResponse(message, "TN note: it should really only be all caps or no caps"); // TN note: it should really only be all caps or no caps
-            }
+            };
         }
     }
 };
