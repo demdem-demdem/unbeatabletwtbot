@@ -50,7 +50,8 @@ module.exports = async (message) => {
         'quave?r?in it': '# im straight up quavin it!!!!!!!!',
         "you'?re? doing? the" : "same shit",
         'peak': 'divide',
-        'jail': 'Prison.'
+        'jail': 'Prison.',
+        'clanker' : 'FUCK YOU !!!'
     };
 
     // takes the const and make it an array and also make it regex (i hate regex please never use regex)
