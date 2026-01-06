@@ -30,6 +30,10 @@ module.exports = async (message) => {
         return; 
     }
 
+    if (message.content.startsWith('!kiss') && message.author.id === process.env.KISSER_USER_ID) {
+        await message.reply('*kisses you*');
+    }
+
     // takes the content of all messages and makes it lowercase too because we never know (we always know)
     const content = message.content;
     const lowerContent = content.toLowerCase();
