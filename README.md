@@ -9,7 +9,7 @@ Where do i begin huuuh its a bot for [**unbeatabletwtcord**](https://discord.gg/
 * **Shame Board (the demboard..)** Public humilation time !! Your message have 10 tomato reactions ? Congrats, you're shamed for life.
 * **SHE TALKS** Don't you fucking dare say mommy, apoco will answer you. Although you can be fucking tired, Quaver loves to swear
 * **No Spoilers mf** The spoiler chan also want to starboard their shit :( Well now they can, 7 green hearts reaction pins your message in the channel (be careful cuz discord has a 50 pin limit so it will delete the oldest to make place).
-* **Goth counter** Hazel said too much time she loved her goth baddie, unbeatabot is going to remind her everytime she says it lmfao
+* **Goth counter** Hazel said too much time it loved its goth baddie, unbeatabot is going to remind it everytime it says it lmfao
 * **Other dumb shit i make** Sometimes new features will appear out of nowhere and idc enough to put them here, read the fucking code now.
 
 ## Setup or how to poison your server

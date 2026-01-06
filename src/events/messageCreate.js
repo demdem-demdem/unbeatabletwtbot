@@ -38,7 +38,7 @@ module.exports = async (message) => {
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
-    // Count for Hazel cuz she goth badding too much
+    // Count for Hazel cuz it goth badding too much
     const gothBaddieIHateYouHazel = ['goth baddie', 'gothie', 'woman in goth'];
     if (message.author.id === process.env.BADDIE_USER_ID && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
         const newCount = updateCounter(message.author.id);
