@@ -45,6 +45,13 @@ module.exports = async (message) => {
         return triggerResponse(message, `thats the ${newCount} time you've said goth baddie / gothie.`);
     };
 
+    // Count for Dem cuz she fucking loves poco a bit too much (i hate her (her is me honestly))
+    const pocoDeathForPocoCeo = 'poco';
+    if (message.author.id === process.env.MY_USER_ID && lowerContent.includes(pocoDeathForPocoCeo)) {
+        const newCount = updateCounter(message.author.id);
+        return triggerResponse(message, `that's the ${newCount} time you've expressed love towards Poco, it's cute <3`);
+    }
+
    // triggers message for messaged and shit i guess (can be used with regex (don't kill yourself plz))
     const triggers = {
         'quave?r?in it': '# im straight up quavin it!!!!!!!!',
