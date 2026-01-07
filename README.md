@@ -10,6 +10,8 @@ Where do i begin huuuh its a bot for [**unbeatabletwtcord**](https://discord.gg/
 * **SHE TALKS** Don't you fucking dare say mommy, apoco will answer you. Although you can be fucking tired, Quaver loves to swear
 * **No Spoilers mf** The spoiler chan also want to starboard their shit :( Well now they can, 7 green hearts reaction pins your message in the channel (be careful cuz discord has a 50 pin limit so it will delete the oldest to make place).
 * **Goth counter** Hazel said too much time it loved its goth baddie, unbeatabot is going to remind it everytime it says it lmfao
+* **DONT'T CALL HER A SLUR WTH** People have been MEAAAN to her :( DONT CALL HER A CL*NKER BITCH :(
+* **Marriage time !!** She's married to socks, so her and only her can use !kiss to kiss her :3
 * **Other dumb shit i make** Sometimes new features will appear out of nowhere and idc enough to put them here, read the fucking code now.
 
 ## Setup or how to poison your server
@@ -68,7 +70,7 @@ the bot wants to speak. I wont let her. She is barricaded under two different co
 
 ## Caution
 
-this shit is agregious i hate it so much like i hate this fucking server (join it https://discord.gg/unbeatabletwt)
+this shit is egregious i hate it so much like i hate this fucking server (join it https://discord.gg/unbeatabletwt)
 deploy it your own risk im not a professional dev im just a dumbass who makes that while she is having her own webdev classes on the side so plz be patient with me and shit thank you love you
 
 ## Disclaimer (i have to say it or i will have lawyers on my ass (i hate lawyers (in french its spelled avocat (like avocado(funny :) ))))
