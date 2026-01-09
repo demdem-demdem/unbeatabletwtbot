@@ -52,6 +52,12 @@ module.exports = async (message) => {
         return triggerResponse(message, `that's the ${newCount} time you've expressed love towards Poco, it's cute <3`);
     }
 
+    // those two fucking twins hates me, so i hate them back. if they say something it will answer (i luv it) (ilove poco btw like the character not the person behind it)
+    const thoseTwoTwinsAreTweeking = ['babe', 'baby', 'cool'];
+    if (thoseTwoTwinsAreTweeking.some(babyWord => lowerContent.includes(babyWord)) && (message.author.id === process.env.POCO_USER_ID || message.author.id === process.env.APOCO_USER_ID)) {
+        return triggerResponse(message, `(i luv it)`);
+    }
+
     // Messages for wazu to go to sleep because we cant fucking take it anymore
     if (message.author.id === process.env.SLEEPER_USER_ID) {
 
