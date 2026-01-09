@@ -13,6 +13,7 @@ Where do i begin huuuh its a bot for [**unbeatabletwtcord**](https://discord.gg/
 * **Poco Counter** Dem is so gay she loves poco a but too much, so there we go. Dem counter. Poco counter any shit you wanna call it.
 * **DONT'T CALL HER A SLUR WTH** People have been MEAAAN to her :( DONT CALL HER A CL*NKER BITCH :(
 * **Marriage time !!** She's married to socks, so her and only her can use !kiss to kiss her :3
+* **WAZU GO TO SLEEP NOW** she needs to be reminded that he needs to sleep at 10 pm and on the weekday mf insomnia when you get us...
 * **Other dumb shit i make** Sometimes new features will appear out of nowhere and idc enough to put them here, read the fucking code now.
 
 ## Setup or how to poison your server

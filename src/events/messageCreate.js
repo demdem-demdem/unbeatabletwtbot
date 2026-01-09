@@ -52,8 +52,52 @@ module.exports = async (message) => {
         return triggerResponse(message, `that's the ${newCount} time you've expressed love towards Poco, it's cute <3`);
     }
 
+    // Messages for wazu to go to sleep because we cant fucking take it anymore
+    if (message.author.id === process.env.MY_USER_ID) {
+
+        // so we set his timezone (warsaw)
+        const wazuTimezone = 'Europe/Warsaw';
+        const rightNowRightHere = new Date();
+
+        // we take her timezone and like just make it a single number (like 1 or 23) yknow
+        const wazuFuckedUpPolishHour = rightNowRightHere.toLocaleString('en-GB', {
+            timeZone: wazuTimezone,
+            hour: 'numeric',
+            hour12: false,
+            weekday: 'long'
+        });
+
+        // split the mf array with , because it makes snese > we send the hour and the fucking weekday
+        const[wazuDay, wazuHourStringFuckingChrist] = wazuFuckedUpPolishHour.split(', ');
+        const wazuFuckUpHourInGeneral = parseInt(wazuHourStringFuckingChrist);
+        const isWazuWeekDay = !['Saturday', 'Sunday'].includes(wazuDay);
+        
+
+        // if its more than 10pm and less than 8 shE NEEDS TO SLEEP FUCKING CHRIST (also check for that mf weekday) ????
+        if (isWazuWeekDay && (wazuFuckUpHourInGeneral >= 22 || wazuFuckUpHourInGeneral < 8)) {
+            
+            // 1/4 chance for wazu to be yelled at (dumbass)
+            const oneOutOfFourForWazuToSleepGoToSleepFfs = Math.floor((Math.random() * 4) + 1);
+            
+            // initialize the messages like a shit ton so he doenst get killed byt the same message
+            const wazuGoTheFuckToSleep = ['GO THE SLEEP', 'WHY ARE YOU STILL AWAKE ???', 'NAH MAN FUCK YOU YOURE STILL AWAKE ??', 'SLEEEEEEEP FFS'];
+            
+            // THIS CODE IS SELF EXPLENATORY DUMB BITCH ??? CANT YOU FUCKING READ ????
+            if (lowerContent.includes('sleep')) {
+                const wazuChoice = Math.floor(Math.random() * wazuGoTheFuckToSleep.length);
+                return triggerResponse(message, wazuGoTheFuckToSleep[wazuChoice]);
+            }
+            else if (oneOutOfFourForWazuToSleepGoToSleepFfs === 1) {
+                const wazuChoice = Math.floor(Math.random() * wazuGoTheFuckToSleep.length);
+                return triggerResponse(message, wazuGoTheFuckToSleep[wazuChoice]);
+            }
+            
+        };
+    };
+    
    // triggers message for messaged and shit i guess (can be used with regex (don't kill yourself plz))
     const triggers = {
+        'toothepast': 'Crest :)',
         'quave?r?in it': '# im straight up quavin it!!!!!!!!',
         "you'?re? doing? the" : "same shit",
         'peak': 'divide',
