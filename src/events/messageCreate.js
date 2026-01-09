@@ -53,7 +53,7 @@ module.exports = async (message) => {
     }
 
     // Messages for wazu to go to sleep because we cant fucking take it anymore
-    if (message.author.id === process.env.MY_USER_ID) {
+    if (message.author.id === process.env.SLEEPER_USER_ID) {
 
         // so we set his timezone (warsaw)
         const wazuTimezone = 'Europe/Warsaw';
