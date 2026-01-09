@@ -38,6 +38,11 @@ module.exports = async (message) => {
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
+    const zackFairTheTokenGuyWhoLovesFF7R = 'living legacy';
+    if (message.author.id === process.env.FF7R_USER_ID && lowerContent.includes(zackFairTheTokenGuyWhoLovesFF7R)) {
+        return mediaResponse(message, `Price Of Freedom`, ['./assets/pof.ogg'])
+    };
+
     // Count for Hazel cuz it goth badding too much
     const gothBaddieIHateYouHazel = ['goth baddie', 'gothie', 'woman in goth'];
     if (message.author.id === process.env.BADDIE_USER_ID && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
@@ -53,7 +58,7 @@ module.exports = async (message) => {
     }
 
     // those two fucking twins hates me, so i hate them back. if they say something it will answer (i luv it) (ilove poco btw like the character not the person behind it)
-    const thoseTwoTwinsAreTweeking = ['babe', 'baby', 'cool'];
+    const thoseTwoTwinsAreTweeking = ['babe', 'baby', 'cool', 'love'];
     if (thoseTwoTwinsAreTweeking.some(babyWord => lowerContent.includes(babyWord)) && (message.author.id === process.env.POCO_USER_ID || message.author.id === process.env.APOCO_USER_ID)) {
         return triggerResponse(message, `(i luv it)`);
     }
