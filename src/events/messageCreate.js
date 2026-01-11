@@ -4,6 +4,7 @@ const { updateCounter } = require('../utils/counterHandler');
 
 module.exports = async (message) => {
     if (message.author.bot) return;
+    if (message.channel.id === "1450982292167327869" ) return;
 
     // message logic for me to fuck up with people
     if (message.content.startsWith('!say ') && 
@@ -30,36 +31,17 @@ module.exports = async (message) => {
         return; 
     };
 
-    if (message.content.startsWith('!kiss') && message.author.id === process.env.KISSER_USER_ID) {
-        await message.reply('*kisses you*');
-    };
-
     // takes the content of all messages and makes it lowercase too because we never know (we always know)
     const content = message.content;
     const lowerContent = content.toLowerCase();
     
-    const zackFairTheTokenGuyWhoLovesFF7R = 'living legacy';
-    if (message.author.id === process.env.FF7R_USER_ID && lowerContent.includes(zackFairTheTokenGuyWhoLovesFF7R)) {
-        return mediaResponse(message, `Price Of Freedom`, ['./assets/pof.ogg'])
+    if (message.content.startsWith('!kiss') && message.author.id === process.env.KISSER_USER_ID) {
+        await message.reply('*kisses you*');
     };
-
-    // Count for Hazel cuz it goth badding too much
-    const gothBaddieIHateYouHazel = ['goth baddie', 'gothie', 'woman in goth'];
-    if (message.author.id === process.env.BADDIE_USER_ID && gothBaddieIHateYouHazel.some(key => lowerContent.includes(key))) {
-        const newCount = updateCounter(message.author.id);
-        return triggerResponse(message, `thats the ${newCount} time you've said goth baddie / gothie.`);
-    };
-
-    // Count for Dem cuz she fucking loves poco a bit too much (i hate her (her is me honestly))
-    const pocoDeathForPocoCeo = 'poco';
-    if (message.author.id === process.env.MY_USER_ID && lowerContent.includes(pocoDeathForPocoCeo)) {
-        const newCount = updateCounter(message.author.id);
-        return triggerResponse(message, `that's the ${newCount} time you've expressed love towards Poco, it's cute <3`);
-    }
 
     // those two fucking twins hates me, so i hate them back. if they say something it will answer (i luv it) (ilove poco btw like the character not the person behind it)
-    const thoseTwoTwinsAreTweeking = ['babe', 'baby', 'cool', 'love'];
-    if (thoseTwoTwinsAreTweeking.some(babyWord => lowerContent.includes(babyWord)) && (message.author.id === process.env.POCO_USER_ID || message.author.id === process.env.APOCO_USER_ID)) {
+    const thoseTwoTwinsAreTweeking = 'love'
+    if (lowerContent.includes(thoseTwoTwinsAreTweeking) && (message.author.id === process.env.POCO_USER_ID || message.author.id === process.env.APOCO_USER_ID)) {
         return triggerResponse(message, `(i luv it)`);
     }
 
@@ -108,7 +90,6 @@ module.exports = async (message) => {
     
    // triggers message for messaged and shit i guess (can be used with regex (don't kill yourself plz))
     const triggers = {
-        'toothepast': 'Crest :)',
         'quave?r?in it': '# im straight up quavin it!!!!!!!!',
         "you'?re? doing? the" : "same shit",
         'peak': 'divide',
@@ -128,13 +109,9 @@ module.exports = async (message) => {
     const goodMoriningSunshine = /^((gm)|(goo+d\s?morning?)|(mo+rning?))/i;
     if (goodMoriningSunshine.test(content)) return triggerResponse(message, "It's afternoon");
 
-    // its such a fun word
-    if (lowerContent.includes('mommy')) {
-        return mediaResponse(message, "'Mommy' is such a fun word, isn't it ?", ['./assets/mommy.ogg']);
-    };
 
     // regex hell (un-able | bata bada | quaver swears yaddayadda)
-    const pattern = /(\bUN[a-zA-Z]*ABLE\b)|(\b(ba[td]a)+\b)|(\bfucking\s?tired?)|(\bhammers?)/gi;
+    const pattern = /(\bUNBEATABLE\b)|(\b(ba[td]a)+\b)|(\bfucking\s?tired?)|(\bhammers?)/gi;
     const matches = content.match(pattern);
 
     if (matches) {

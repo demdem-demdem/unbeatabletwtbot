@@ -6,7 +6,7 @@ async function triggerResponse(message, text) {
     try {
         cooldowns.normal = true;
         await message.reply(text);
-        setTimeout(() => cooldowns.normal = false, 10000);
+        setTimeout(() => cooldowns.normal = false, 60000);
     } catch (e) { console.error(e); }
 }
 
@@ -16,7 +16,7 @@ async function mediaResponse(message, text, media) {
     try {
         cooldowns.media = true;
         await message.reply({ content: text, files: media });
-        setTimeout(() => cooldowns.media = false, 60000);
+        setTimeout(() => cooldowns.media = false, 600000);
     } catch (e) { console.error(e); }
 }
 
