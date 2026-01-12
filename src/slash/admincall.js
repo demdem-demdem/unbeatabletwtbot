@@ -21,8 +21,9 @@ module.exports = {
         const adminChannel = interaction.client.channels.cache.get(adminChannelId);
 
         const adminEmbed = new EmbedBuilder()
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setColor(0xFF0000)
-            .setDescription(`Reason ${reasonCall}`)
+            .setDescription(`**Reason**: ${reasonCall}`)
             .addFields({ name:'Channel', value:`${channel}`,  inline:true })
             .setTimestamp();
 
