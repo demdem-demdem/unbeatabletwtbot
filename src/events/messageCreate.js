@@ -4,6 +4,7 @@ const { updateCounter } = require('../utils/counterHandler');
 
 module.exports = async (message) => {
     if (message.author.bot) return;
+    if (message.system) return;
     if (message.channel.id === "1450982292167327869" ) return;
 
     // message logic for me to fuck up with people
