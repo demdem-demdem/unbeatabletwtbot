@@ -106,9 +106,8 @@ module.exports = async (message) => {
     };
 
     // good morning, its afternoon
-    const goodMoriningSunshine = /^((gm)|(goo+d\s?morning?)|(mo+rning?))/i;
+    const goodMoriningSunshine = /^((goo+d\s?morning?)|(mo+rning?))/i;
     if (goodMoriningSunshine.test(content)) return triggerResponse(message, "It's afternoon");
-
 
     // regex hell (un-able | bata bada | quaver swears yaddayadda)
     const pattern = /(\bUNBEATABLE\b)|(\b(ba[td]a)+\b)|(\bfucking\s?tired?)|(\bhammers?)/gi;
